@@ -10,7 +10,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="394.0" prefWidth="589.0" spacing="15.0">
          <children>
-            <Label text="MainUI" textAlignment="CENTER">
+            <Label text="Sun Devils Cafeteria System" textAlignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
