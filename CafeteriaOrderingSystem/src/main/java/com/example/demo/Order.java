@@ -21,7 +21,7 @@ public class Order implements updateOrderIterface {
 
 	private Customer customer;
 
-	private UserInterface userInterface;
+	private CustomerOrderingUI userInterface;
 
 	private Collection<OrderItem> orderItem;
 

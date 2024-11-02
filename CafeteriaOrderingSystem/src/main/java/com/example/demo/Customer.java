@@ -8,7 +8,7 @@ public class Customer {
 
 	private int contactDetails;
 
-	private UserInterface userInterface;
+	private CustomerOrderingUI userInterface;
 
 	private Order order;
 

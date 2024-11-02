@@ -9,7 +9,7 @@ public class Menu {
 
 	private List<MenuItem> items;
 
-	private UserInterface userInterface;
+	private CustomerOrderingUI userInterface;
 
 	private MenuItem menuItem;
 

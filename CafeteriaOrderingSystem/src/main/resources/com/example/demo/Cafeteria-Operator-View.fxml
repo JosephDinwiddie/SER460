@@ -13,5 +13,8 @@
          </font>
       </Label>
       <Button fx:id="backButton" layoutX="25.0" layoutY="351.0" mnemonicParsing="false" onAction="#switchToMainUI" text="Back" />
+       <Button fx:id="viewOrdersButton" layoutX="100.0" layoutY="100.0" mnemonicParsing="false" onAction="#viewOrders" text="View Orders" />
+      <Button fx:id="processOrderButton" layoutX="100.0" layoutY="150.0" mnemonicParsing="false" onAction="#processOrder" text="Process Order" />
+      <Button fx:id="updateOrderStatusButton" layoutX="100.0" layoutY="200.0" mnemonicParsing="false" onAction="#updateOrderStatus" text="Update Order Status" />
    </children>
 </AnchorPane>
