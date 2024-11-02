@@ -1,3 +1,5 @@
+package com.example.demo;
+
 public class Dashboard {
 
 	private List<Order> activeOrders;

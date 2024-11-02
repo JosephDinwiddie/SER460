@@ -1,3 +1,10 @@
+package com.example.demo;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class CafeteriaOperator {
 
 	private int operatorID;
@@ -9,14 +16,24 @@ public class CafeteriaOperator {
 	private Dashboard dashboard;
 
 	public List<Order> viewOrders() {
-		return null;
+		List<Order> orders = new ArrayList<Order>(); 
+		System.out.println
+        return null;
 	}
 
 	public void processOrder(Order Order) {
+		if (order != null) {
+            // Logic to process the order
+            System.out.println("Order processed: " + order.getOrderId());
+        } else {
+			System.out.println("Order is null");
+		}
 
 	}
 
 	public void updateOrderStatus() {
+
+		System.out.println("Order status updated.");
 
 	}
 

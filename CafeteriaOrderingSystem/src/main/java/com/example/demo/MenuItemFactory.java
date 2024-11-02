@@ -1,3 +1,4 @@
+package com.example.demo;
 public class MenuItemFactory {
 
 	private MenuItem menuItem;

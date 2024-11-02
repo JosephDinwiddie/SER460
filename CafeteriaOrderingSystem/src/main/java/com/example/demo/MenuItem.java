@@ -1,3 +1,4 @@
+package com.example.demo;
 public class MenuItem {
 
 	private int itemID;

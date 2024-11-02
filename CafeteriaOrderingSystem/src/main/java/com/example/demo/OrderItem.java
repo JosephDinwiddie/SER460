@@ -1,3 +1,4 @@
+package com.example.demo;
 public class OrderItem {
 
 	private int orderItemID;

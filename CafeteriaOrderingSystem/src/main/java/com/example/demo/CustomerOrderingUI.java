@@ -1,3 +1,4 @@
+package com.example.demo;
 public class UserInterface {
 
 	private String currentPage;

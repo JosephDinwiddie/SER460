@@ -13,5 +13,6 @@
          </font>
       </Label>
       <Button fx:id="backButton" layoutX="35.0" layoutY="361.0" mnemonicParsing="false" onAction="#switchToMainUI" text="Back" />
+      <Button text="Order Now" onAction="#openOrderingUI" layoutX="150.0" layoutY="200.0"/>
    </children>
 </AnchorPane>
