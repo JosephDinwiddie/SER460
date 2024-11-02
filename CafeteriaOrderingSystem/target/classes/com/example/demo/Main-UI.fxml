@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.SceneController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="394.0" prefWidth="589.0" spacing="15.0">
+         <children>
+            <Label text="MainUI" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Button fx:id="cafManViewButton" mnemonicParsing="false" onAction="#switchToCafeteriaManagerView" text="Cafeteria Manger View" />
+            <Button fx:id="cafOpViewButton" mnemonicParsing="false" onAction="#switchToCafeteriaOperatorView" text="Cafeteria Operator View" />
+            <Button fx:id="cusViewButton" mnemonicParsing="false" onAction="#switchToCustomerView" text="Customer View" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
