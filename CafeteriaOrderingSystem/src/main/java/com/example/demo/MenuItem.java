@@ -1,28 +1,58 @@
 package com.example.demo;
+
 public class MenuItem {
+    private int id;
+    private String name;
+    private String mealType;
+    private double price;
 
-	private int itemID;
+    public MenuItem(int id, String name, String mealType, double price) {
+        this.id = id;
+        this.name = name;
+        this.mealType = mealType;
+        this.price = price;
+    }
 
-	private String name;
+    public double getPrice() { // Ensure this method exists and is public
+        return price;
+    }
 
-	private String description;
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	private float price;
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mealType='" + mealType + '\'' +
+                ", price=" + price +
+                '}';
+    }
 
-	private boolean available;
+    // Other getters and setters
+    public int getId() {
+        return id;
+    }
 
-	private Menu menu;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	private Menu menu;
+    public String getName() {
+        return name;
+    }
 
-	private MenuItemFactory menuItemFactory;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getItemDetails() {
-		return null;
-	}
+    public String getMealType() {
+        return mealType;
+    }
 
-	public void updateAvailable(boolean boolean) {
-
-	}
-
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
+    }
 }

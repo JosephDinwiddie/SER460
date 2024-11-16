@@ -3,7 +3,7 @@ public interface ItemCommand {
 
 	private Driver driver;
 
-	private OrderManagment orderManagment;
+	private OrderManager orderManagment;
 
 	private Order order;
 

@@ -1,54 +1,63 @@
 package com.example.demo;
-import java.util.Collection;
 
-public class Order implements updateOrderIterface {
+import java.util.List;
 
-	private int orderID;
+public class Order {
+    private int orderID;
+    private String customerID;
+    private List<MenuItem> items;
+    private double totalCost;
 
-	private String orderStatus;
+    public Order(int orderID, String customerID, List<MenuItem> items, double totalCost) {
+        this.orderID = orderID;
+        this.customerID = customerID;
+        this.items = items;
+        this.totalCost = totalCost;
+    }
 
-	private Customer customerDetails;
+    // Getters and setters
+    public int getOrderID() {
+        return orderID;
+    }
 
-	private DateTime orderTime;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
 
-	private float totalAmount;
+    public String getCustomerID() {
+        return customerID;
+    }
 
-	private int quantity;
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
 
-	private MenuItem itemDetails;
+    public List<MenuItem> getItems() {
+        return items;
+    }
 
-	private List<ItemCommand> listOfItems;
+    public void setItems(List<MenuItem> items) {
+        this.items = items;
+    }
 
-	private Customer customer;
+    public double getTotalCost() {
+        return totalCost;
+    }
 
-	private CustomerOrderingUI userInterface;
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
 
-	private Collection<OrderItem> orderItem;
-
-	private OrderManagment orderManagment;
-
-	private Collection<ItemCommand> itemCommand;
-
-	private OrderManagment orderManagment;
-
-	public void calculateTotal() {
-
-	}
-
-	public void submitOrderItems(String ordersToStart) {
-
-	}
-
-	public void addOrderItem(ItemCommand command) {
-
-	}
-
-
-	/**
-	 * @see updateOrderIterface#updateOrderStatus(String)
-	 */
-	public void updateOrderStatus(String String) {
-
-	}
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order ID: ").append(orderID).append("\n");
+        sb.append("Customer ID: ").append(customerID).append("\n");
+        sb.append("Items:\n");
+        for (MenuItem item : items) {
+            sb.append("  - ").append(item.getName()).append(": $").append(item.getPrice()).append("\n");
+        }
+        sb.append("Total Cost: $").append(totalCost);
+        return sb.toString();
+    }
 }

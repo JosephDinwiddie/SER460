@@ -1,15 +1,15 @@
 package com.example.demo;
-public class lunchOrderItem implements ItemCommand {
+public abstract class lunchOrderItem implements ItemCommand {
 
-	private OrderManagment orderManager;
+	private OrderManager orderManager;
 
 	private OrderItem orderItem;
 
-	private OrderManagment orderManagment;
+	private OrderManager orderManagment;
 
 	public abstract void submitOrderToOrderManagment();
 
-	public void lunchOrderItem(String Itemname, OrderManagment orderMananger) {
+	public void lunchOrderItem(String Itemname, OrderManager orderMananger) {
 
 	}
 
