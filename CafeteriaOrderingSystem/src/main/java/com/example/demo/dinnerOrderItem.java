@@ -2,15 +2,15 @@
 package com.example.demo;
 public class dinnerOrderItem implements ItemCommand {
 
-	private OrderManagment orderManager;
+	private OrderManager orderManager;
 
 	private OrderItem orderItem;
 
-	private OrderManagment orderManagment;
+	private OrderManager orderManagment;
 
 	public abstract void submitOrderToOrderManagment();
 
-	public void dinnerOrderItem(String Itemname, OrderManagment orderMananger) {
+	public void dinnerOrderItem(String Itemname, OrderManager orderMananger) {
 
 	}
 

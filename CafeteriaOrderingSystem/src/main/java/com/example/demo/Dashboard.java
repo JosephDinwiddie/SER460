@@ -6,7 +6,7 @@ public class Dashboard {
 
 	private List<Order> completedOrders;
 
-	private OrderManagment orderManagment;
+	private OrderManager orderManagment;
 
 	private CafeteriaOperator cafeteriaOperator;
 

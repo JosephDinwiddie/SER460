@@ -2,15 +2,15 @@ package com.example.demo;
 
 public class breakfeastOrderItem implements ItemCommand {
 
-	private OrderManagment orderManager;
+	private OrderManager orderManager;
 
 	private OrderItem orderItem;
 
-	private OrderManagment orderManagment;
+	private OrderManager orderManagment;
 
 	public abstract void submitOrderToOrderManagment();
 
-	public void breakfeastOrderItem(String Itemname, OrderManagment orderMananger) {
+	public void breakfeastOrderItem(String Itemname, OrderManager orderMananger) {
 
 	}
 
