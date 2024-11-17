@@ -35,7 +35,7 @@ public class Customer {
         }
 
         String orderNumber = UUID.randomUUID().toString();
-        currentOrder = new Order(orderNumber, customerID, selectedItems, "Pending");
+        currentOrder = new Order(Integer.parseInt(orderNumber), customerID, selectedItems, 0);
         orderHistory.put(orderNumber, currentOrder);
 
         System.out.println("Order placed successfully! Order Number: " + orderNumber);

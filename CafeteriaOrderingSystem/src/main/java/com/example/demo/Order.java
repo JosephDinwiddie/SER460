@@ -8,6 +8,8 @@ public class Order {
     private List<MenuItem> items;
     private double totalCost;
 
+    private String status;
+
     public Order(int orderID, String customerID, List<MenuItem> items, double totalCost) {
         this.orderID = orderID;
         this.customerID = customerID;
@@ -47,6 +49,8 @@ public class Order {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
+    public String getStatus() {return  status;}
 
     @Override
     public String toString() {

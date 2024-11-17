@@ -8,7 +8,8 @@ public class breakfeastOrderItem implements ItemCommand {
 
 	private OrderManager orderManagment;
 
-	public abstract void submitOrderToOrderManagment();
+	@Override
+	public void submitOrderToOrderManagment(){};
 
 	public void breakfeastOrderItem(String Itemname, OrderManager orderMananger) {
 

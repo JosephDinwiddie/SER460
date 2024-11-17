@@ -17,14 +17,14 @@ public class CafeteriaOperator {
 
 	public List<Order> viewOrders() {
 		List<Order> orders = new ArrayList<Order>(); 
-		System.out.println
+		System.out.println();
         return null;
 	}
 
-	public void processOrder(Order Order) {
+	public void processOrder(Order order) {
 		if (order != null) {
             // Logic to process the order
-            System.out.println("Order processed: " + order.getOrderId());
+            System.out.println("Order processed: " + order.getOrderID());
         } else {
 			System.out.println("Order is null");
 		}

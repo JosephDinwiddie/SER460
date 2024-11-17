@@ -7,7 +7,8 @@ public class beverageOrderItem implements ItemCommand {
 
 	private OrderManager orderManagment;
 
-	public abstract void submitOrderToOrderManagment();
+	@Override
+	public void submitOrderToOrderManagment(){};
 
 	public void beverageOrderItem(String Itemname, OrderManager orderMananger) {
 
