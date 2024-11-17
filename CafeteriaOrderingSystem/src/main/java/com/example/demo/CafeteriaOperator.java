@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CafeteriaOperator {
 
+	private static CafeteriaOperator instance;
 	private int operatorID;
 
 	private String name;
@@ -15,10 +16,17 @@ public class CafeteriaOperator {
 
 	private Dashboard dashboard;
 
+	private CafeteriaOperator(){
+
+	}
+	public static CafeteriaOperator getInstance() {
+		if (instance == null) {
+			instance = new CafeteriaOperator();
+		}
+		return instance;
+	}
 	public List<Order> viewOrders() {
-		List<Order> orders = new ArrayList<Order>(); 
-		System.out.println();
-        return null;
+		return dashboard.getAllOrders();
 	}
 
 	public void processOrder(Order order) {
@@ -29,6 +37,13 @@ public class CafeteriaOperator {
 			System.out.println("Order is null");
 		}
 
+	}
+
+	public Dashboard getDashboard() {
+		if(dashboard == null){
+			dashboard = Dashboard.getInstance();
+		}
+		return dashboard;
 	}
 
 	public void updateOrderStatus() {

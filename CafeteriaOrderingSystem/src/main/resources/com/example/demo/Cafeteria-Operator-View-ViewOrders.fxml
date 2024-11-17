@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CafeteriaOperatorViewUViewOrders">
+   <children>
+      <ImageView fx:id="constructionImage" fitHeight="200.0" fitWidth="200.0" layoutX="200.0" layoutY="150.0" />
+      <Button fx:id="backButton" layoutX="25.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <VBox alignment="TOP_CENTER" layoutX="37.0" layoutY="22.0" prefHeight="324.0" prefWidth="520.0">
+         <children>
+            <Label prefHeight="35.0" prefWidth="131.0" text="View Orders" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="520.0" spacing="10.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="217.0">
+                     <children>
+                        <Label text="List of Orders" />
+                        <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="213.0" spacing="5.0">
+                     <children>
+                        <Label text="Order Info" />
+                        <HBox prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Order ID:" />
+                              <Label fx:id="labelOrderID" layoutX="10.0" layoutY="10.0" text="Placeholder" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="44.0" prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Order Status:" />
+                              <Label fx:id="labelOrderStatus" layoutX="10.0" layoutY="10.0" text="Placeholder" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="27.0" prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Customer Details:" />
+                              <Label fx:id="labelCustomerDetails" layoutX="10.0" layoutY="10.0" text="Placeholder" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="78.0" prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Total Amount:" />
+                              <Label fx:id="labelTotalAmount" layoutX="10.0" layoutY="10.0" text="Placeholder" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="95.0" prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Quantity:" />
+                              <Label fx:id="labelQuantity" layoutX="10.0" layoutY="10.0" text="Placeholder" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="112.0" prefHeight="81.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Items Ordered:" />
+                              <Label fx:id="labelItemsOrdered" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="101.0" prefWidth="122.0" text="Placeholder" wrapText="true" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

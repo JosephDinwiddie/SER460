@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class CafeteriaOperatorViewUI extends SceneController{
@@ -21,7 +22,7 @@ public class CafeteriaOperatorViewUI extends SceneController{
     @FXML
     private Button updateOrderStatusButton;
 
-    private CafeteriaOperator cafeteriaOperator = new CafeteriaOperator();
+    private CafeteriaOperator cafeteriaOperator = CafeteriaOperator.getInstance();
 
     @Override
     public void switchToMainUI(ActionEvent event) throws IOException {
@@ -49,7 +50,7 @@ public class CafeteriaOperatorViewUI extends SceneController{
         //cafeteriaOperator.viewOrders();
         // Add code to display orders to the UI
         try {
-            showUnderConstructionPage(event);
+            switchToCafeteriaOperatorViewUIViewOrders(event);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -62,7 +63,7 @@ public class CafeteriaOperatorViewUI extends SceneController{
         //cafeteriaOperator.processOrder(order);
         // Add code to update UI based on processing result
         try {
-            showUnderConstructionPage(event);
+            switchToCafeteriaOperatorViewUIProcessOrders(event);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -74,7 +75,7 @@ public class CafeteriaOperatorViewUI extends SceneController{
         //cafeteriaOperator.updateOrderStatus();
         // Add code to reflect status update in UI
         try {
-            showUnderConstructionPage(event);
+            switchToCafeteriaOperatorViewUIProcessOrders(event);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

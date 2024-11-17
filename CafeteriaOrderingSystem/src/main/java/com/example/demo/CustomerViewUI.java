@@ -39,7 +39,7 @@ public class CustomerViewUI extends SceneController {
 
     public CustomerViewUI() {
         menu = new Menu();
-        orderManager = new OrderManager();
+        orderManager = orderManager.getInstance();
         selectedItems = new ArrayList<>();
     }
 

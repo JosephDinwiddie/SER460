@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class CafeteriaApplication extends Application {
 
@@ -17,6 +18,13 @@ public class CafeteriaApplication extends Application {
         stage.setTitle("Cafeteria Ordering System");
         stage.setScene(scene);
         stage.show();
+
+        List<MenuItem> items = List.of(
+                new MenuItem(56, "Caeser Salad", "Lunch", 8.99),
+                new MenuItem(55, "Chicken Sandwich", "Lunch", 9.99)
+        );
+
+        OrderManager.getInstance().placeOrder("9999", items);
     }
 
     public static void main(String[] args) {

@@ -55,4 +55,6 @@ public class MenuItem {
     public void setMealType(String mealType) {
         this.mealType = mealType;
     }
+
+
 }

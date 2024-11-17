@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CafeteriaManagerViewUI">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CafeteriaManagerViewUI">
    <children>
       <Label layoutX="153.0" layoutY="14.0" text="Cafeteria Manager" textAlignment="CENTER">
          <font>
@@ -21,7 +21,6 @@
             <AnchorPane>
                <children>
                   <Button fx:id="viewOrdersButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" onAction="#viewOrders" text="View Orders" />
-                  <Button fx:id="processOrderButton" layoutX="50.0" layoutY="100.0" mnemonicParsing="false" onAction="#processOrder" text="Process Order" />
                   <Button fx:id="updateOrderStatusButton" layoutX="50.0" layoutY="150.0" mnemonicParsing="false" onAction="#updateOrderStatus" text="Update Order Status" />
                </children>
             </AnchorPane>

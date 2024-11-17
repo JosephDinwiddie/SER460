@@ -8,6 +8,7 @@ public class Order {
     private List<MenuItem> items;
     private double totalCost;
 
+
     private String status;
 
     public Order(int orderID, String customerID, List<MenuItem> items, double totalCost) {
@@ -15,6 +16,7 @@ public class Order {
         this.customerID = customerID;
         this.items = items;
         this.totalCost = totalCost;
+        this.status = "Received";
     }
 
     // Getters and setters
@@ -51,6 +53,8 @@ public class Order {
     }
 
     public String getStatus() {return  status;}
+
+    public void setStatus(String status) {this.status = status;}
 
     @Override
     public String toString() {

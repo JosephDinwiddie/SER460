@@ -47,4 +47,21 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToCafeteriaOperatorViewUIViewOrders(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Cafeteria-Operator-View-ViewOrders.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCafeteriaOperatorViewUIProcessOrders(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Cafeteria-Operator-View-ProcessOrders.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

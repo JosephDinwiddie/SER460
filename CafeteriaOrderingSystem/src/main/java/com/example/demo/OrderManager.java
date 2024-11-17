@@ -6,14 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderManager {
-    private int orderCounter; // Keeps track of Order IDs
-    private Map<Integer, Order> orders; // Stores orders with their Order ID as the key
-
-    public OrderManager() {
-        this.orderCounter = 1000; // Start Order IDs at 1000
-        this.orders = new HashMap<>();
+    /* Make Order Manager a singleton*/
+    private static OrderManager instance;
+    private OrderManager(){}
+    public static OrderManager getInstance() {
+        if (instance == null) {
+            instance = new OrderManager();
+            orderCounter = 1000; // Start Order IDs at 1000
+            orders = new HashMap<>();
+        }
+        return instance;
     }
 
+    /**********VARIABLES*************/
+    private static int orderCounter; // Keeps track of Order IDs
+    private static Map<Integer, Order> orders; // Stores orders with their Order ID as the key
+
+    /**********FUNCTIONS*************/
     /**
      * Places an order and generates an Order ID.
      *
@@ -73,5 +82,9 @@ public class OrderManager {
     // Optional: Retrieve the full order details by Order ID
     public Order getOrderDetails(int orderID) {
         return orders.get(orderID);
+    }
+
+    public Map<Integer, Order> getOrders(){
+        return orders;
     }
 }
