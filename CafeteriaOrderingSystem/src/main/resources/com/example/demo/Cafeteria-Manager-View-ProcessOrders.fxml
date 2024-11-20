@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CafeteriaManagerViewUViewProcess">
+   <children>
+      <ImageView fx:id="constructionImage" fitHeight="200.0" fitWidth="200.0" layoutX="200.0" layoutY="150.0" />
+      <Button fx:id="backButton" layoutX="25.0" layoutY="350.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <VBox alignment="TOP_CENTER" layoutX="37.0" layoutY="22.0" prefHeight="324.0" prefWidth="520.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="35.0" prefWidth="227.0" text="Process Orders" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="520.0" spacing="10.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="217.0">
+                     <children>
+                        <Label text="List of Orders" />
+                        <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="213.0" spacing="5.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="132.0" text="Order Process Options" />
+                        <HBox prefHeight="16.0" prefWidth="213.0" spacing="5.0">
+                           <children>
+                              <Label text="Current Status" />
+                              <Label fx:id="orderStatus" layoutX="10.0" layoutY="10.0" text="Waiting for Selection" />
+                           </children>
+                        </HBox>
+                        <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="112.0" text="Change Status to:" />
+                        <Button fx:id="recievedButton" mnemonicParsing="false" onAction="#changeStatusToReceived" text="Received" />
+                        <Button fx:id="inProgressButton" layoutX="85.0" layoutY="76.0" mnemonicParsing="false" onAction="#changeStatusToInProgress" text="In progress" />
+                        <Button fx:id="completeButton" layoutX="85.0" layoutY="106.0" mnemonicParsing="false" onAction="#changeStatusToComplete" text="Complete" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

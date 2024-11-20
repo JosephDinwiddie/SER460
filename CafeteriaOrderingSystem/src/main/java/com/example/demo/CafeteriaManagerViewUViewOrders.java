@@ -50,10 +50,11 @@ public class CafeteriaManagerViewUViewOrders extends SceneController implements 
     /***********VARIABLES***********/
     private CafeteriaOperator cafeteriaOperator = CafeteriaOperator.getInstance();
 
+
     /***********FUNCTIONS***********/
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        super.switchToCafeteriaOperatorView(event);
+        super.switchToCafeteriaManagerView(event);
     }
 
     @Override

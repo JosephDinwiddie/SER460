@@ -64,4 +64,52 @@ public class SceneController {
         stage.show();
     }
 
+    public void switchToCafeteriaManagerViewUIViewOrders(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Cafeteria-Manager-View-ViewOrders.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCafeteriaManagerViewUIProcessOrders(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Cafeteria-Manager-View-ProcessOrders.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToAddMenuItemView(ActionEvent event, Menu menu) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Add-Menu-Item.fxml"));
+        Parent root = loader.load();
+    
+        // Pass the menu object to the AddMenuItemController
+        AddMenuItemController controller = loader.getController();
+        controller.setMenu(menu); // Inject the menu instance
+    
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+        stage.setTitle("Add Menu Item");
+        stage.setScene(new Scene(root, 400, 300)); // Adjust dimensions as needed
+        stage.showAndWait(); // Wait for the user to complete the operation
+    }
+
+    public void switchToRemoveMenuItemView(ActionEvent event, Menu menu) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Remove-Menu-Item.fxml"));
+        Parent root = loader.load();
+    
+        // Get the controller and pass the menu instance
+        RemoveMenuItemController controller = loader.getController();
+        controller.setMenu(menu); // Inject the shared menu instance
+    
+        Stage stage = new Stage();
+        stage.setTitle("Remove Menu Items");
+        stage.setScene(new Scene(root, 400, 600)); // Adjust dimensions as needed
+        stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+        stage.showAndWait(); // Wait for user to complete the operation
+    }
+    
+    
+
 }

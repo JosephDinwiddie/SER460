@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.demo.AddMenuItemController">
+    <Label text="Add Menu Item" style="-fx-font-size: 18px;"/>
+    
+    <TextField fx:id="itemIdField" promptText="Enter Item ID"/>
+    <TextField fx:id="itemNameField" promptText="Enter Item Name"/>
+    <TextField fx:id="mealTypeField" promptText="Enter Meal Type (e.g., Breakfast)"/>
+    <TextField fx:id="priceField" promptText="Enter Price"/>
+    
+    <Button text="Save" onAction="#saveMenuItem"/>
+    <Button text="Cancel" onAction="#cancel"/>
+</VBox>

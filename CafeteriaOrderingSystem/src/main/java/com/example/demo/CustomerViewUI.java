@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -38,10 +39,11 @@ public class CustomerViewUI extends SceneController {
     private List<MenuItem> selectedItems;
 
     public CustomerViewUI() {
-        menu = new Menu();
+        menu = Menu.getInstance(); // Use the Singleton instance of Menu
         orderManager = orderManager.getInstance();
         selectedItems = new ArrayList<>();
     }
+    
 
     @Override
     public void switchToMainUI(ActionEvent event) {
@@ -59,34 +61,87 @@ public class CustomerViewUI extends SceneController {
         setupOrderTab(); // For "Place Order" tab
     }
 
-    private void setupMenuSelectionTab() {
+      private void setupMenuSelectionTab() {
         VBox menuSelectionLayout = new VBox(10);
+        menuSelectionLayout.setPadding(new Insets(10));
 
+        // Cafeteria Manager: Shared menu buttons for consistency
         Label menuLabel = new Label("Select a Menu to View Items:");
         Button breakfastButton = new Button("Breakfast");
         Button lunchButton = new Button("Lunch");
         Button dinnerButton = new Button("Dinner");
 
-        menuSelectionLayout.getChildren().addAll(menuLabel, breakfastButton, lunchButton, dinnerButton);
-
+        // Set button actions to display the static menu
         breakfastButton.setOnAction(e -> displayStaticMenu("Breakfast"));
         lunchButton.setOnAction(e -> displayStaticMenu("Lunch"));
         dinnerButton.setOnAction(e -> displayStaticMenu("Dinner"));
 
-        tabPane.getTabs().get(0).setContent(menuSelectionLayout); // Populate "Display Menu" tab
+        menuSelectionLayout.getChildren().addAll(menuLabel, breakfastButton, lunchButton, dinnerButton);
+
+        // Populate the "Display Menu" tab with menu selection layout
+        tabPane.getTabs().get(0).setContent(menuSelectionLayout);
     }
 
     private void displayStaticMenu(String mealType) {
-        VBox menuLayout = new VBox(10);
-        menuLayout.setPadding(new Insets(10));
-        Label menuTitle = new Label(mealType + " Menu:");
-        List<MenuItem> items = menu.filterByMealType(mealType);
-
-        for (MenuItem item : items) {
-            menuLayout.getChildren().add(new Label(item.getName() + " - $" + item.getPrice()));
+        try {
+            // Create a new stage for the pop-up
+            Stage popupStage = new Stage();
+            popupStage.setTitle(mealType + " Menu");
+    
+            // Create a VBox to hold the menu and the back button
+            VBox popupLayout = new VBox(10);
+            popupLayout.setPadding(new Insets(10));
+            popupLayout.setAlignment(Pos.CENTER);
+    
+            // Add a label for the menu type
+            Label menuLabel = new Label(mealType + " Menu:");
+    
+            // Create the scrollable menu layout
+            ScrollPane menuPane = MenuDisplayUtil.createScrollableMenu(menu, mealType);
+    
+            // Add a Close button to return to the main display
+            Button closeButton = new Button("Close");
+            closeButton.setOnAction(e -> popupStage.close());
+    
+            // Add elements to the VBox
+            popupLayout.getChildren().addAll(menuLabel, menuPane, closeButton);
+    
+            // Set the scene for the pop-up window
+            Scene popupScene = new Scene(popupLayout, 400, 600); // Adjust size as needed
+            popupStage.setScene(popupScene);
+    
+            // Set modality to block interaction with the main window while the pop-up is open
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+    
+            // Show the pop-up window
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            showAlert("Error", "Failed to load menu for " + mealType);
         }
+    }
+    
+    
 
-        tabPane.getTabs().get(0).setContent(menuLayout);
+    private void displayMenu(String mealType) {
+        placeOrderLayout.getChildren().clear();
+    
+        Label menuLabel = new Label(mealType + " Menu:");
+        List<MenuItem> items = menu.filterByMealType(mealType);
+        VBox itemLayout = new VBox(5);
+    
+        for (MenuItem item : items) {
+            Button itemButton = new Button(item.getName() + " - $" + item.getPrice());
+            itemButton.setOnAction(e -> selectedItems.add(item)); // Add items to the same list
+            itemLayout.getChildren().add(itemButton);
+        }
+    
+        Button finishOrderButton = new Button("Finish Order");
+        finishOrderButton.setOnAction(e -> promptForCustomerID()); // Prompt for Customer ID
+    
+        Button backButton = new Button("Back to Menu Selection");
+        backButton.setOnAction(e -> goBackToMenuSelection());
+    
+        placeOrderLayout.getChildren().addAll(menuLabel, itemLayout, finishOrderButton, backButton);
     }
 
     private void setupOrderTab() {
@@ -115,26 +170,6 @@ public class CustomerViewUI extends SceneController {
         placeOrderLayout.getChildren().addAll(selectMenuLabel, breakfastButton, lunchButton, dinnerButton);
     }
 
-    private void displayMenu(String mealType) {
-        placeOrderLayout.getChildren().clear();
-    
-        Label menuLabel = new Label(mealType + " Menu:");
-        List<MenuItem> items = menu.filterByMealType(mealType);
-        VBox itemLayout = new VBox(5);
-    
-        for (MenuItem item : items) {
-            Button itemButton = new Button(item.getName() + " - $" + item.getPrice());
-            itemButton.setOnAction(e -> selectedItems.add(item)); // Add items to the same list
-            itemLayout.getChildren().add(itemButton);
-        }
-    
-        Button finishOrderButton = new Button("Finish Order");
-        finishOrderButton.setOnAction(e -> promptForCustomerID()); // Prompt for Customer ID
-    
-        placeOrderLayout.getChildren().addAll(menuLabel, itemLayout, finishOrderButton);
-    }
-    
-    
 
     private void promptForCustomerID() {
         placeOrderLayout.getChildren().clear();

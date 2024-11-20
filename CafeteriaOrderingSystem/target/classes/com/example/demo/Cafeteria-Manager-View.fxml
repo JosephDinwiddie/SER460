@@ -17,7 +17,7 @@
       <TabPane layoutX="20.0" layoutY="70.0" prefHeight="280.0" prefWidth="560.0">
          
          <!-- Orders Tab -->
-         <Tab text="Orders">
+         <Tab text="Orders" closable="false">
             <AnchorPane>
                <children>
                   <Button fx:id="viewOrdersButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" onAction="#viewOrders" text="View Orders" />
@@ -27,7 +27,7 @@
          </Tab>
          
          <!-- View Menu Tab -->
-         <Tab text="View Menu">
+         <Tab text="View Menu" closable="false">
             <AnchorPane>
                <children>
                   <Button fx:id="viewMenuButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" onAction="#viewMenu" text="View Menu" />
@@ -36,7 +36,7 @@
          </Tab>
          
          <!-- Change Menu Tab -->
-         <Tab text="Change Menu">
+         <Tab text="Change Menu" closable="false">
             <AnchorPane>
                <children>
                   <Button fx:id="addMenuItemButton" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" onAction="#addMenuItem" text="Add Menu Item" />

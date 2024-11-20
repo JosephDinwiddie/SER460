@@ -1,12 +1,9 @@
 package com.example.demo;
+
 public class MenuItemFactory {
 
-	private MenuItem menuItem;
-
-	private Menu menu;
-
-	public MenuItem addMenuItem(String type, int itemID, String name, float price, boolean avalibility) {
-		return null;
-	}
-
+    // Factory method to create a new menu item
+    public static MenuItem createMenuItem(int id, String name, String mealType, double price) {
+        return new MenuItem(id, name, mealType, price);
+    }
 }
