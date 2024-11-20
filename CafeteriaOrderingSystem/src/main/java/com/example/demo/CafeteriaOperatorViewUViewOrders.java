@@ -72,9 +72,8 @@ public class CafeteriaOperatorViewUViewOrders extends SceneController implements
         });
     }
 
-    void updateUI(String selectedElement){
-        /* Find order based on their orderID*/
-        if(selectedElement == null || selectedElement.contains("no orders")){
+    void updateUI(String selectedElement) {
+        if (selectedElement == null || selectedElement.isBlank() || selectedElement.contains("No item selected")) {
             String errorString = "No order found";
             labelCustomerDetails.setText(errorString);
             labelItemsOrdered.setText(errorString);
@@ -84,41 +83,56 @@ public class CafeteriaOperatorViewUViewOrders extends SceneController implements
             labelTotalAmount.setText(errorString);
             return;
         }
+    
         if (selectedElement.startsWith("[") && selectedElement.endsWith("]")) {
-            selectedElement = selectedElement.substring(1, selectedElement.length() - 1);
+            selectedElement = selectedElement.substring(1, selectedElement.length() - 1).trim();
         }
-
-        Order selectedOrder = null;
-        for (Order order: cafeteriaOperator.viewOrders()) {
-            if(order.getOrderID() == Integer.parseInt(selectedElement)){
-                selectedOrder = order;
-            }
-        }
-
-        if(selectedOrder != null){
-
-            labelCustomerDetails.setText(selectedOrder.getCustomerID());
-
-            String itemsString;
-            if(!selectedOrder.getItems().isEmpty()){
-                StringBuilder builder = new StringBuilder();
-                for (MenuItem item : selectedOrder.getItems()) {
-                    builder.append(item.getName()).append(" ");
+    
+        try {
+            int orderId = Integer.parseInt(selectedElement);
+            System.out.println("Selected Element (Order ID): " + orderId);
+    
+            Order selectedOrder = null;
+    
+            for (Order order : cafeteriaOperator.viewOrders()) {
+                System.out.println("Order ID: " + order.getOrderID() + ", Items: " + order.getItems());
+                if (order.getOrderID() == orderId) {
+                    selectedOrder = order;
+                    break;
                 }
-                itemsString = builder.toString().trim();
-            }else{
-                itemsString = "No items in order";
             }
-
-            labelItemsOrdered.setText(itemsString);
-
-            labelOrderID.setText(Integer.toString(selectedOrder.getOrderID()));
-
-            labelOrderStatus.setText(selectedOrder.getStatus());
-
-            labelQuantity.setText(Integer.toString(selectedOrder.getItems().size()));
-
-            labelTotalAmount.setText(Double.toString(selectedOrder.getTotalCost()));
+    
+            if (selectedOrder != null) {
+                System.out.println("Selected Order: " + selectedOrder);
+    
+                labelCustomerDetails.setText(selectedOrder.getCustomerID());
+    
+                if (!selectedOrder.getItems().isEmpty()) {
+                    StringBuilder itemsBuilder = new StringBuilder();
+                    for (MenuItem item : selectedOrder.getItems()) {
+                        System.out.println("Item: " + item.getName());
+                        itemsBuilder.append(item.getName()).append(", ");
+                    }
+                    labelItemsOrdered.setText(itemsBuilder.substring(0, itemsBuilder.length() - 2));
+                } else {
+                    labelItemsOrdered.setText("No items in order");
+                }
+    
+                labelOrderID.setText(Integer.toString(selectedOrder.getOrderID()));
+                labelOrderStatus.setText(selectedOrder.getStatus());
+                labelQuantity.setText(Integer.toString(selectedOrder.getItems().size()));
+                labelTotalAmount.setText(String.format("$%.2f", selectedOrder.getTotalCost()));
+            } else {
+                throw new IllegalArgumentException("Order not found");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            labelCustomerDetails.setText("Invalid order ID format");
+            labelItemsOrdered.setText("Invalid order ID format");
+            labelOrderID.setText("Invalid order ID format");
+            labelOrderStatus.setText("Invalid order ID format");
+            labelQuantity.setText("Invalid order ID format");
+            labelTotalAmount.setText("Invalid order ID format");
         }
-    }
+    }    
 }

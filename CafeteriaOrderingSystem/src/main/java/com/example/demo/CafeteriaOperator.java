@@ -50,6 +50,6 @@ public class CafeteriaOperator {
 
 		System.out.println("Order status updated.");
 
-	}
+    }
 
 }
