@@ -2,11 +2,12 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/18.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CustomerViewUI">
    <children>
-      <!-- "To Main Menu" button at the top -->
-      <Button fx:id="mainMenuButton" layoutX="10.0" layoutY="10.0" onAction="#switchToMainUI" text="To Main Menu" />
+      <!-- "Back to Login" button at the top -->
+      <Button fx:id="mainMenuButton" layoutX="10.0" layoutY="10.0" onAction="#switchToLogin" text="Back to Login" />
 
       <!-- TabPane for the interface -->
       <TabPane fx:id="tabPane" layoutX="20.0" layoutY="50.0" prefHeight="300.0" prefWidth="560.0">
@@ -24,10 +25,15 @@
          <Tab text="Place Order">
             <AnchorPane>
                <children>
-                  <VBox fx:id="placeOrderLayout" layoutX="10.0" layoutY="10.0" spacing="10">
-                      <!-- Content dynamically set via Java code -->
-                      <Button fx:id="backButton" text="Back" onAction="#goBackToMenuSelection" />
-                  </VBox>
+                  <!-- ScrollPane to allow scrolling when items exceed the visible area -->
+                  <ScrollPane fx:id="placeOrderScrollPane" layoutX="10.0" layoutY="10.0" fitToWidth="true" prefHeight="200.0" prefWidth="500.0">
+                     <!-- VBox for dynamic content -->
+                     <VBox fx:id="placeOrderLayout" spacing="10" alignment="TOP_CENTER">
+                        <padding>
+                           <Insets top="10" right="10" bottom="15" left="10" />
+                        </padding>
+                     </VBox>
+                  </ScrollPane>
                </children>
             </AnchorPane>
          </Tab>

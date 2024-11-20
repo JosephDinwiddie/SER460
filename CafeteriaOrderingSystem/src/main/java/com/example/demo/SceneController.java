@@ -108,8 +108,13 @@ public class SceneController {
         stage.setScene(new Scene(root, 400, 600)); // Adjust dimensions as needed
         stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
         stage.showAndWait(); // Wait for user to complete the operation
-    }
-    
-    
+    } 
 
+    public void switchToLogin(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

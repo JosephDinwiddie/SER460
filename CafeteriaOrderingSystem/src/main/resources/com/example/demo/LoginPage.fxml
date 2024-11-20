@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.demo.LoginController" prefWidth="600" prefHeight="400">
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Select Role" style="-fx-font-size: 18px;" />
+
+        <!-- Buttons for each role -->
+        <Button text="Manager" onAction="#selectManager" />
+        <Button text="Operator" onAction="#selectOperator" />
+        <Button text="Customer" onAction="#loginAsCustomer" />
+
+        <!-- Hidden login prompt for Manager/Operator -->
+        <VBox fx:id="loginPrompt" spacing="10" alignment="CENTER" visible="false">
+            <TextField fx:id="usernameField" promptText="Username" />
+            <PasswordField fx:id="passwordField" promptText="Password" />
+            <Button text="Login" onAction="#loginWithCredentials" />
+        </VBox>
+
+        <Label fx:id="statusLabel" style="-fx-text-fill: red;" />
+    </VBox>
+</StackPane>

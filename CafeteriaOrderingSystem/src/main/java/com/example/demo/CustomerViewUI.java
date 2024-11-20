@@ -16,9 +16,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
+
 
 public class CustomerViewUI extends SceneController {
 
@@ -30,6 +34,9 @@ public class CustomerViewUI extends SceneController {
 
     @FXML
     private TabPane tabPane;
+
+    @FXML
+    private ScrollPane placeOrderScrollPane;
 
     @FXML
     private VBox placeOrderLayout;
@@ -57,6 +64,7 @@ public class CustomerViewUI extends SceneController {
     @FXML
     private void initialize() {
         tabPane.getTabs().forEach(tab -> tab.setClosable(false)); // Disable closing tabs
+        placeOrderScrollPane.setContent(placeOrderLayout); // Set VBox as ScrollPane content
         setupMenuSelectionTab(); // For "Display Menu" tab
         setupOrderTab(); // For "Place Order" tab
     }
@@ -107,7 +115,7 @@ public class CustomerViewUI extends SceneController {
             popupLayout.getChildren().addAll(menuLabel, menuPane, closeButton);
     
             // Set the scene for the pop-up window
-            Scene popupScene = new Scene(popupLayout, 400, 600); // Adjust size as needed
+            Scene popupScene = new Scene(popupLayout, 500, 800); // Adjust size as needed
             popupStage.setScene(popupScene);
     
             // Set modality to block interaction with the main window while the pop-up is open
@@ -174,15 +182,15 @@ public class CustomerViewUI extends SceneController {
     private void promptForCustomerID() {
         placeOrderLayout.getChildren().clear();
 
-        Label promptLabel = new Label("Enter Customer ID:");
+        Label promptLabel = new Label("Enter Name:");
         TextField customerIDField = new TextField();
-        customerIDField.setPromptText("Alphanumeric Customer ID");
+        customerIDField.setPromptText("Name");
 
         Button confirmButton = new Button("Confirm");
         confirmButton.setOnAction(e -> {
             String customerID = customerIDField.getText();
             if (customerID == null || customerID.trim().isEmpty()) {
-                showAlert("Invalid Input", "Customer ID cannot be empty.");
+                showAlert("Invalid Input", "Name cannot be empty.");
             } else {
                 showFinalizeOrderPage(customerID);
             }
@@ -213,35 +221,105 @@ public class CustomerViewUI extends SceneController {
             itemLayout.getChildren().add(removeButton);
         }
     
-        Label totalLabel = new Label("Total Cost: $" + totalCost[0]);
+        Label totalLabel = new Label("Total Cost: $" + String.format("%.2f", totalCost[0]));
         Button submitButton = new Button("Submit Order");
-        submitButton.setOnAction(e -> submitOrder(customerID, totalCost[0]));
+        submitButton.setOnAction(e -> promptForPayment(customerID, totalCost[0])); // Prompt for payment
     
-        placeOrderLayout.getChildren().addAll(finalizeLabel, customerIDLabel, itemLayout, totalLabel, submitButton);
+        // Add a spacer region to push the button into view
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+    
+        placeOrderLayout.getChildren().addAll(finalizeLabel, customerIDLabel, itemLayout, totalLabel, spacer, submitButton);
     }
+    
+    
+    
+    private void promptForPayment(String customerID, double totalCost) {
+        Stage paymentStage = new Stage();
+        paymentStage.setTitle("Payment");
+    
+        VBox paymentLayout = new VBox(10);
+        paymentLayout.setPadding(new Insets(10));
+        paymentLayout.setAlignment(Pos.CENTER);
+    
+        Label paymentLabel = new Label("Enter Credit Card Number:");
+        TextField creditCardField = new TextField();
+        creditCardField.setPromptText("16-digit credit card number");
+    
+        Button payButton = new Button("Pay");
+        payButton.setOnAction(e -> {
+            String creditCardNumber = creditCardField.getText();
+            if (isValidCreditCard(creditCardNumber)) {
+                paymentStage.close();
+                submitOrder(customerID, totalCost); // Proceed with order submission
+            } else {
+                showAlert("Invalid Payment", "The credit card number is invalid. Please try again.");
+            }
+        });
+    
+        paymentLayout.getChildren().addAll(paymentLabel, creditCardField, payButton);
+    
+        Scene scene = new Scene(paymentLayout, 300, 150);
+        paymentStage.setScene(scene);
+        paymentStage.initModality(Modality.APPLICATION_MODAL);
+        paymentStage.showAndWait();
+    }
+
+    private boolean isValidCreditCard(String creditCardNumber) {
+        if (creditCardNumber == null) {
+            return false;
+        }
+    
+        // Remove all spaces and hyphens from the input
+        String sanitized = creditCardNumber.replaceAll("[\\s-]", "");
+    
+        // Ensure the sanitized input is a 16-digit number
+        if (!sanitized.matches("\\d{16}")) {
+            return false;
+        }
+    
+        // Apply Luhn Algorithm to validate the card number
+        int sum = 0;
+        boolean alternate = false;
+        for (int i = sanitized.length() - 1; i >= 0; i--) {
+            int n = Character.getNumericValue(sanitized.charAt(i));
+            if (alternate) {
+                n *= 2;
+                if (n > 9) {
+                    n -= 9;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
+        }
+        return (sum % 10 == 0);
+    }
+    
+    
     
 
     private void submitOrder(String customerID, double totalCost) {
         try {
-         // Place the order and generate an Order ID
+            // Place the order and generate an Order ID
             int orderID = orderManager.placeOrder(customerID, selectedItems);
-
+    
             // Show success message
             placeOrderLayout.getChildren().clear();
             Label successLabel = new Label("Order placed successfully!");
             Label orderIDLabel = new Label("Order ID: " + orderID);
-
+            Label totalCostLabel = new Label("Total Paid: $" + String.format("%.2f", totalCost));
+    
             placeOrderLayout.getChildren().addAll(successLabel, orderIDLabel);
-
-
+    
             // Reset the Place Order tab after a short delay to allow user to see success message
             PauseTransition delay = new PauseTransition(Duration.seconds(3));
             delay.setOnFinished(e -> setupOrderTab());
             delay.play();
         } catch (IllegalArgumentException e) {
-        showAlert("Order Error", e.getMessage());
+            showAlert("Order Error", e.getMessage());
         }
     }
+    
 
     
 

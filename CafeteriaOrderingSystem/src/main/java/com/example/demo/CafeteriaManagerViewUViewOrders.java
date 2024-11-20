@@ -1,29 +1,25 @@
 package com.example.demo;
 
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class CafeteriaManagerViewUViewOrders extends SceneController implements Initializable {
+public class CafeteriaManagerViewUViewOrders extends SceneController {
 
-    /***********FXML DECLARATION***********/
     @FXML
     private ListView<String> listView;
+
+    @FXML
+    private Button viewOrderDetailsButton;
 
     @FXML
     private Button backButton;
@@ -46,94 +42,105 @@ public class CafeteriaManagerViewUViewOrders extends SceneController implements 
     @FXML
     private Label labelTotalAmount;
 
-
-    /***********VARIABLES***********/
     private CafeteriaOperator cafeteriaOperator = CafeteriaOperator.getInstance();
 
-
-    /***********FUNCTIONS***********/
     @FXML
-    public void goBack(ActionEvent event) throws IOException {
-        super.switchToCafeteriaManagerView(event);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*Adds the orderIDS of the current orders to the list view*/
+    private void initialize() {
+        // Load order IDs into the ListView
         listView.getItems().addAll(cafeteriaOperator.getDashboard().getAllOrdersIDs());
 
-        /*Adds a listener for whenever the user changes the selection that changes the displayed values depending on the selection*/
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
-                String getSelectedItem = (selectedItems.isEmpty())?"No item selected":selectedItems.toString();
-                updateUI(getSelectedItem);
+        // Disable the pop-out button until an order is selected
+        viewOrderDetailsButton.setDisable(true);
+
+        // Add a listener to enable the pop-out button when an order is selected
+        listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            viewOrderDetailsButton.setDisable(newValue == null);
+            if (newValue != null) {
+                updateUI(newValue);
             }
         });
     }
 
-    void updateUI(String selectedElement) {
-        if (selectedElement == null || selectedElement.isBlank() || selectedElement.contains("No item selected")) {
-            String errorString = "No order found";
-            labelCustomerDetails.setText(errorString);
-            labelItemsOrdered.setText(errorString);
-            labelOrderID.setText(errorString);
-            labelOrderStatus.setText(errorString);
-            labelQuantity.setText(errorString);
-            labelTotalAmount.setText(errorString);
+    @FXML
+    private void goBack(ActionEvent event) throws IOException {
+        super.switchToCafeteriaManagerView(event);
+    }
+
+    @FXML
+    private void popOutOrderDetails(ActionEvent event) {
+        String selectedOrderID = listView.getSelectionModel().getSelectedItem();
+
+        if (selectedOrderID == null) {
+            showAlert("No Selection", "Please select an order to view its details.");
             return;
         }
-    
-        if (selectedElement.startsWith("[") && selectedElement.endsWith("]")) {
-            selectedElement = selectedElement.substring(1, selectedElement.length() - 1).trim();
-        }
-    
+
         try {
-            int orderId = Integer.parseInt(selectedElement);
-            System.out.println("Selected Element (Order ID): " + orderId);
-    
-            Order selectedOrder = null;
-    
-            for (Order order : cafeteriaOperator.viewOrders()) {
-                System.out.println("Order ID: " + order.getOrderID() + ", Items: " + order.getItems());
-                if (order.getOrderID() == orderId) {
-                    selectedOrder = order;
-                    break;
-                }
-            }
-    
-            if (selectedOrder != null) {
-                System.out.println("Selected Order: " + selectedOrder);
-    
-                labelCustomerDetails.setText(selectedOrder.getCustomerID());
-    
-                if (!selectedOrder.getItems().isEmpty()) {
-                    StringBuilder itemsBuilder = new StringBuilder();
-                    for (MenuItem item : selectedOrder.getItems()) {
-                        System.out.println("Item: " + item.getName());
-                        itemsBuilder.append(item.getName()).append(", ");
-                    }
-                    labelItemsOrdered.setText(itemsBuilder.substring(0, itemsBuilder.length() - 2));
-                } else {
-                    labelItemsOrdered.setText("No items in order");
-                }
-    
-                labelOrderID.setText(Integer.toString(selectedOrder.getOrderID()));
-                labelOrderStatus.setText(selectedOrder.getStatus());
-                labelQuantity.setText(Integer.toString(selectedOrder.getItems().size()));
-                labelTotalAmount.setText(String.format("$%.2f", selectedOrder.getTotalCost()));
-            } else {
-                throw new IllegalArgumentException("Order not found");
-            }
-        } catch (NumberFormatException e) {
+            Order selectedOrder = cafeteriaOperator.viewOrders().stream()
+                    .filter(order -> String.valueOf(order.getOrderID()).equals(selectedOrderID))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+            showOrderItemsWindow(selectedOrder.getItems());
+        } catch (Exception e) {
             e.printStackTrace();
-            labelCustomerDetails.setText("Invalid order ID format");
-            labelItemsOrdered.setText("Invalid order ID format");
-            labelOrderID.setText("Invalid order ID format");
-            labelOrderStatus.setText("Invalid order ID format");
-            labelQuantity.setText("Invalid order ID format");
-            labelTotalAmount.setText("Invalid order ID format");
+            showAlert("Error", "Failed to load order details.");
         }
-    }    
+    }
+
+    private void updateUI(String selectedOrderID) {
+        try {
+            Order selectedOrder = cafeteriaOperator.viewOrders().stream()
+                    .filter(order -> String.valueOf(order.getOrderID()).equals(selectedOrderID))
+                    .findFirst()
+                    .orElse(null);
+
+            if (selectedOrder == null) {
+                resetUI();
+                return;
+            }
+
+            labelCustomerDetails.setText(selectedOrder.getCustomerID());
+            labelItemsOrdered.setText(String.join(", ", selectedOrder.getItems().stream()
+                    .map(MenuItem::getName)
+                    .toArray(String[]::new)));
+            labelOrderID.setText(String.valueOf(selectedOrder.getOrderID()));
+            labelOrderStatus.setText(selectedOrder.getStatus());
+            labelQuantity.setText(String.valueOf(selectedOrder.getItems().size()));
+            labelTotalAmount.setText(String.format("$%.2f", selectedOrder.getTotalCost()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            resetUI();
+        }
+    }
+
+    private void resetUI() {
+        labelCustomerDetails.setText("N/A");
+        labelItemsOrdered.setText("N/A");
+        labelOrderID.setText("N/A");
+        labelOrderStatus.setText("N/A");
+        labelQuantity.setText("N/A");
+        labelTotalAmount.setText("N/A");
+    }
+
+    private void showOrderItemsWindow(List<MenuItem> items) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OrderItemsView.fxml"));
+        Parent root = loader.load();
+
+        OrderItemsViewController controller = loader.getController();
+        controller.setItems(items);
+
+        Stage stage = new Stage();
+        stage.setTitle("Order Items");
+        stage.setScene(new javafx.scene.Scene(root, 400, 300));
+        stage.show();
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }
