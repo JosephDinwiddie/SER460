@@ -62,6 +62,10 @@ public class Dashboard {
 		return listOfIDs;
 	}
 
+	public void removeOrder(Order order) {
+		OrderManager.getInstance().removeOrder(order);
+	}
+
 	public List<Order> getAllOrders(){
 			List<Order> listOfOrders = new ArrayList<>();
 

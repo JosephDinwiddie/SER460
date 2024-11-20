@@ -7,7 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
@@ -59,6 +61,13 @@ public class CafeteriaOperatorViewUViewProcess extends SceneController implement
         });
     }
 
+    private void removeOrder(Order order) {
+        if (order != null) {
+            cafeteriaOperator.getDashboard().removeOrder(order);
+        }
+    }
+    
+
     @FXML
     public void changeStatusToReceived(ActionEvent event){
         ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
@@ -71,13 +80,38 @@ public class CafeteriaOperatorViewUViewProcess extends SceneController implement
         String getSelectItem = (selectedItems.isEmpty())?"Nothing selected":selectedItems.toString();
         updateUI(getSelectItem, "In Progress");
     }
-    @FXML
-    public void changeStatusToComplete(ActionEvent event){
-        ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
-        String getSelectItem = (selectedItems.isEmpty())?"Nothing selected":selectedItems.toString();
-        updateUI(getSelectItem, "Complete");
-    }
 
+
+    @FXML
+    public void changeStatusToComplete(ActionEvent event) {
+        ObservableList<String> selectedItems = listView.getSelectionModel().getSelectedItems();
+        String getSelectItem = (selectedItems.isEmpty()) ? "Nothing selected" : selectedItems.toString();
+    
+        Order selectedOrder = findOrder(getSelectItem);
+    
+        if (selectedOrder != null) {
+            // Create a confirmation dialog
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Completion");
+            confirmationAlert.setHeaderText("Are you sure you want to mark this order as Complete?");
+            confirmationAlert.setContentText("This will remove the order from the system.");
+    
+            // Show the dialog and wait for a response
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    // Remove the order from the system
+                    removeOrder(selectedOrder);
+                    // Update the ListView
+                    listView.getItems().remove(getSelectItem);
+                    // Update the status label
+                    orderStatus.setText("Order marked as complete and removed.");
+                }
+            });
+        } else {
+            orderStatus.setText("No valid order selected.");
+        }
+    }
+    
     void updateUI(String selectedElement, String newStatus){
         Order selectedOrder = findOrder(selectedElement);
 

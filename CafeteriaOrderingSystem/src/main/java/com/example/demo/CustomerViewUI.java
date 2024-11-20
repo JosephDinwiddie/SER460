@@ -190,7 +190,6 @@ public class CustomerViewUI extends SceneController {
         try {
          // Place the order and generate an Order ID
             int orderID = orderManager.placeOrder(customerID, selectedItems);
-            //System.out.println("Items" + selectedItems);
 
             // Show success message
             placeOrderLayout.getChildren().clear();
@@ -199,8 +198,6 @@ public class CustomerViewUI extends SceneController {
 
             placeOrderLayout.getChildren().addAll(successLabel, orderIDLabel);
 
-            // Clear the selected items list
-            //selectedItems.clear();
 
             // Reset the Place Order tab after a short delay to allow user to see success message
             PauseTransition delay = new PauseTransition(Duration.seconds(3));

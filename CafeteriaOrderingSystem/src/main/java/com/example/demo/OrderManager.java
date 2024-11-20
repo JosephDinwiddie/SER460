@@ -87,4 +87,10 @@ public class OrderManager {
     public Map<Integer, Order> getOrders(){
         return orders;
     }
+
+    public void removeOrder(Order order) {
+        if (order != null) {
+            orders.remove(order.getOrderID());
+        }
+    }
 }
