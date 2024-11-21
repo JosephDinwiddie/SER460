@@ -63,7 +63,7 @@ public class CafeteriaOperatorViewUViewOrders extends SceneController {
 
     @FXML
     private void goBack(ActionEvent event) throws IOException {
-        super.switchToCafeteriaManagerView(event);
+        super.switchToCafeteriaOperatorView(event);
     }
 
     @FXML
